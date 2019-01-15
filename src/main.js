@@ -13,6 +13,7 @@ function main() {
     scene.add(axes);
 
     //add models
+    animationMixer = null;
     landscape = addModelFromFile("landscape");
     tabel = addModelFromFile("tabel");
     canon = addModelFromFile("canon");
@@ -21,20 +22,20 @@ function main() {
     scene.add(tabel);
     scene.add(canon);
 
-    canon.position.y = 8;
+    canon.position.y = 9;
     canon.rotation.y = DEG_TO_RAD * 160;
 
     //add light
     addLights();
 
-    camera = new THREE.PerspectiveCamera(45,window.innerWidth / window.innerHeight,0.1,1000);
+    camera = new THREE.PerspectiveCamera(45,window.innerWidth / window.innerHeight,0.1,10000);
     camera.position.set(30, 40, 50);
     camera.lookAt(0,0,0);
 
-     gui = new dat.GUI();
-    gui.add(spotLight.position, "x", -50, 50).step(5);
-    gui.add(spotLight.position, "y", -50, 50).step(5);
-    gui.add(spotLight.position, "z", -50, 50).step(5);
+    gui = new dat.GUI();
+    gui.add(sun_light.position, "x", -1000, 1000).step(5);
+    gui.add(sun_light.position, "y", -1000, 1000).step(5);
+    gui.add(sun_light.position, "z", -1000, 1000).step(5);
 
    
 	var orbitControls = new THREE.OrbitControls(camera);
@@ -52,14 +53,17 @@ function main() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(new THREE.Color(0x95A1AC));
     renderer.shadowMap.enabled = true;
+    renderer.shadowMapType = THREE.PCFSoftShadowMap;
     document.getElementById("3d_content").appendChild(renderer.domElement);
 
     var clock = new THREE.Clock();
 
     function mainLoop() {
-
         var delta = clock.getDelta();
 
+        if (animationMixer != null)
+            animationMixer.update(delta);
+        
         renderer.render(scene, camera);
         requestAnimationFrame(mainLoop);
     }

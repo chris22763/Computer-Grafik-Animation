@@ -1,11 +1,11 @@
 function addModelFromFile(select){
 	var path = ""
-
 	var model = new THREE.Group();
-
 	var fbxloader = new THREE.FBXLoader();
 	
-	animationmixer = null;
+	mixer = null;
+	canonAni = null;
+	model.name = select;
 
 	if (select == "landscape"){
 		path = "3d_files/landscape.fbx";
@@ -22,30 +22,35 @@ function addModelFromFile(select){
 		    primed: false,
 		    triggered: false,
 		};
+
 	}
 
 
 	fbxloader.load(path, function(object){
 		model.add(object);
-		animationmixer = new THREE.AnimationMixer(object);
+
+		model.traverse( function ( child ) {
+
+		    if ( child instanceof THREE.Mesh ) {
+		        child.castShadow = true;
+	    		child.receiveShadow = true;
+		    }
+		} );
+
+		mixer = new THREE.AnimationMixer(object);
 		for (var i = 0; i < object.animations.length; i++){
-			var action = animationmixer.clipAction(object.animations[i])
+			var action = mixer.clipAction(object.animations[i]);
 			action.clampWhenFinished = true;
 			action.setLoop(THREE.LoopOnce);
-			console.log(action._clip.name);
+
+			canonAni = canon.children[0].animations;
+			//console.log(action);
 		}
 	});
 
-	model.traverse( function ( child ) {
-
-	    if ( child instanceof THREE.Mesh ) {
-	        child.castShadow = true;
-    		child.receiveShadow = true;
-	    	child.shadow.mapSize.height = 1024;
-	    	child.shadow.mapSize.width = 1024;
-	        child.receiveShadow = true;
-	    }
-	} );
+	model.castShadow = true;
+	model.receiveShadow = true;
+	console.log(model);
 	return model
 
 }
