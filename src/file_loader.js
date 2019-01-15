@@ -3,10 +3,7 @@ function addModelFromFile(select){
 	var model = new THREE.Group();
 	var fbxloader = new THREE.FBXLoader();
 	
-	mixer = null;
-	canonClips = null;
-	canonMesh = null;
-	model.name = select;
+	mixer = null;	model.name = select;
 
 	if ((select == "landscape") || (select == "tabel")){
 		if (select === "tabel"){

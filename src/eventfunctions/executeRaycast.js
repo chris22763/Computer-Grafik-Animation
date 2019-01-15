@@ -28,7 +28,7 @@ function executeRaycast(event) {
         
     	
 
-        if ((firstHit.name === "Pull_Lever_Pivot") || (firstHit.name === "Pull_Lever_Arm")){
+        if (firstHit.name === "Pull_Lever_Pivot"){
         	console.log(firstHit.name);
         	var tween = new TWEEN.Tween(object.rotation)
         		.to({y: DEG_TO_RAD * 130}, 2000)
@@ -38,9 +38,16 @@ function executeRaycast(event) {
 		            }
 		        })
         		.start();
-        }else if (firstHit.name === "On_Off_Lever"){
-      		actionName = "On_Off_Arm";
-			canon.mixer.existingAction(actionName).play();
+        }else if (firstHit.name === "Pull_Lever_Pivot"){
+        	console.log(firstHit.name);
+        	var tween = new TWEEN.Tween(object.rotation)
+        		.to({y: DEG_TO_RAD * 130}, 2000)
+        		.onComplete(function() {
+		            if (Math.abs(object.rotation.y)>=2*Math.PI) {
+		                object.rotation.y = object.rotation.y % (2*Math.PI);
+		            }
+		        })
+        		.start();
         }
 
         // if(firstHit.name == "test"){
