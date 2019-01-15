@@ -5,6 +5,20 @@
     </head>
     <body style="margin:0; overflow:hidden">
         <div id="3d_content"></div>
+        <script type="text/javascript" src="lib/three.js-master/build/three.js"></script>
+		<script type="text/javascript" src="lib/dat.gui-master/build/dat.gui.js"></script>
+		<script type="text/javascript" src="lib/three.js-master/examples/js/controls/OrbitControls.js"></script>
+		<script type="text/javascript" src="lib/three.js-master/examples/js/libs/tween.min.js"></script>
+		<script type="text/javascript" src="lib/three.js-master/examples/js/libs/inflate.min.js"></script>
+		<script type="text/javascript" src="lib/three.js-master/examples/js/loaders/FBXLoader_r90.js"></script>
+		<script type="text/javascript" src="lib/ThreeCSG-master_oldVersion/ThreeCSG.js"></script>
+
+		<!-- Own code -->
+		<script type="text/javascript" src="src/file_loader.js"></script>
+		<script type="text/javascript" src="src/addLights.js"></script>
+		<script type="text/javascript" src="src/eventfunctions/executeRaycast.js"></script>
+		<script type="text/javascript" src="src/eventfunctions/updateAspectRatio.js"></script>
+		<script type="text/javascript" src="src/eventfunctions/calculateMousePosition.js"></script>
         <script src="src/main.js"></script>                    
     </body>
 </html>
