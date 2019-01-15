@@ -4,18 +4,24 @@ function addModelFromFile(select){
 	var fbxloader = new THREE.FBXLoader();
 	
 	mixer = null;
-	canonAni = null;
+	canonClips = null;
+	canonMesh = null;
 	model.name = select;
 
-	if (select == "landscape"){
-		path = "3d_files/landscape.fbx";
+	if ((select == "landscape") || (select == "tabel")){
+		if (select === "tabel"){
+			path = "3d_files/tabel.fbx";
+		}else {
+			path = "3d_files/landscape.fbx";
+		}
+		
+		fbxloader.load(path, function(object){
+			model.add(object);
+		});
 
-	}
-	else if (select == "tabel"){
-		path = "3d_files/tabel.fbx";
-	}
-	else if (select == "canon"){
-		path = "3d_files/camera.fbx";
+	}else if (select == "canon"){
+
+		path = "3d_files/canon.glb";
 		canonState = {
 		    on: false,
 		    loaded: false,
@@ -23,34 +29,39 @@ function addModelFromFile(select){
 		    triggered: false,
 		};
 
+		var loader = new THREE.GLTFLoader();
+
+		loader.load(
+			path,
+			function ( gltf ) {
+				mesh = gltf.scene.children[0],
+				mesh.animations = gltf.animations;
+				canonMesh = gltf.scene || gltf.scenes[0];
+        		canonClips = gltf.animations || [];
+				model.add(mesh);
+
+				console.log(gltf);
+				model.mixer = new THREE.AnimationMixer(gltf.scene);
+		        for (var i = 0; i < gltf.animations.length; i++) {
+		            var action = model.mixer.clipAction(gltf.animations[i]);
+		            action.clampWhenFinished = true;
+		            action.setLoop(THREE.LoopOnce);
+		        }
+			},
+			
+		);
 	}
 
-
-	fbxloader.load(path, function(object){
-		model.add(object);
-
-		model.traverse( function ( child ) {
-
-		    if ( child instanceof THREE.Mesh ) {
-		        child.castShadow = true;
-	    		child.receiveShadow = true;
-		    }
-		} );
-
-		mixer = new THREE.AnimationMixer(object);
-		for (var i = 0; i < object.animations.length; i++){
-			var action = mixer.clipAction(object.animations[i]);
-			action.clampWhenFinished = true;
-			action.setLoop(THREE.LoopOnce);
-
-			canonAni = canon.children[0].animations;
-			//console.log(action);
-		}
+	model.traverse( function ( child ) {
+		
+		if ( child instanceof THREE.Mesh ) {
+	        child.castShadow = true;
+    		child.receiveShadow = true;
+	    }
 	});
 
 	model.castShadow = true;
 	model.receiveShadow = true;
-	console.log(model);
 	return model
 
 }

@@ -13,7 +13,7 @@ function main() {
     scene.add(axes);
 
     //add models
-    animationMixer = null;
+    
     landscape = addModelFromFile("landscape");
     tabel = addModelFromFile("tabel");
     canon = addModelFromFile("canon");
@@ -53,7 +53,7 @@ function main() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(new THREE.Color(0x95A1AC));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMapType = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.getElementById("3d_content").appendChild(renderer.domElement);
 
     var clock = new THREE.Clock();
@@ -61,9 +61,7 @@ function main() {
     function mainLoop() {
         var delta = clock.getDelta();
 
-        if (animationMixer != null)
-            animationMixer.update(delta);
-        
+        TWEEN.update();
         renderer.render(scene, camera);
         requestAnimationFrame(mainLoop);
     }
