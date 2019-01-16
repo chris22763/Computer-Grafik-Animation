@@ -83,7 +83,7 @@ function addModelFromFile(select){
 	}else if (select == "dose"){
 		path = "3d_files/dose.glb";
 		var loader = new THREE.GLTFLoader();
-		var scale = 0.1;
+		var scale = 0.5;
 		loader.load(
 			path,
 			function ( gltf ) {
@@ -101,7 +101,7 @@ function addModelFromFile(select){
         var velocityVectorWC = directionalVectorDC.unproject(camera);
         velocityVectorWC.normalize();
         velocityVectorWC.multiplyScalar(800);
-    	physics.addCylinder(model, 0.1, 0.1, 0.2 , true, 0.1, velocityVectorWC);
+    	physics.addCylinder(model, 1 * scale, 1 * scale, 2 * scale , true, 0.1, velocityVectorWC);
 	
 	}
 

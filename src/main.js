@@ -30,7 +30,7 @@ function main() {
     y = canon.position.y;
     z = canon.position.z;
     camera = new THREE.PerspectiveCamera(45,window.innerWidth / window.innerHeight,0.1,10000);
-    camera.position.set(10, 10, 10);
+    camera.position.set(10, 0, 10);
     camera.lookAt(0,6,0);
 
     console.log(canon.position);
