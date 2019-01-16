@@ -22,8 +22,7 @@ function main() {
     scene.add(tabel);
     scene.add(canon);
 
-    canon.position.y = 9;
-    canon.rotation.y = DEG_TO_RAD * 160;
+    tabel.position.y = 1;
 
     //add light
     addLights();

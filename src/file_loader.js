@@ -22,8 +22,11 @@ function addModelFromFile(select){
 		canonState = {
 		    on: false,
 		    loaded: false,
+		    hold: false,
 		    primed: false,
 		    triggered: false,
+		    retriever: false,
+		    arm: false,
 		};
 
 		var loader = new THREE.GLTFLoader();
@@ -31,13 +34,11 @@ function addModelFromFile(select){
 		loader.load(
 			path,
 			function ( gltf ) {
-				mesh = gltf.scene.children[0],
+				mesh = gltf.scene.children[0];
 				mesh.animations = gltf.animations;
-				canonMesh = gltf.scene || gltf.scenes[0];
-        		canonClips = gltf.animations || [];
-				model.add(mesh);
 
-				console.log(gltf);
+
+				model.add(mesh);
 				model.mixer = new THREE.AnimationMixer(gltf.scene);
 		        for (var i = 0; i < gltf.animations.length; i++) {
 		            var action = model.mixer.clipAction(gltf.animations[i]);
@@ -47,6 +48,14 @@ function addModelFromFile(select){
 			},
 			
 		);
+
+		model.scale.x = 0.2;
+		model.scale.y = 0.2;
+		model.scale.z = 0.2;
+		model.position.y = 9;
+		model.rotation.y = DEG_TO_RAD * 160;
+		console.log(model);
+
 	}
 
 	model.traverse( function ( child ) {
