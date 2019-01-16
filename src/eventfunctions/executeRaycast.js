@@ -1,65 +1,5 @@
 raycaster = new THREE.Raycaster();
 
-function fillTween(){
-    var tweens = {};
-    tweens["Pull_Lever_Full"] = new TWEEN.Tween(mesh.rotation)
-                .to({y: DEG_TO_RAD * 130}, 2000)
-                .onComplete(function() {
-                    if (Math.abs(mesh.rotation.y)>=2*Math.PI) {
-                        mesh.rotation.y = mesh.rotation.y % (2*Math.PI);
-                    }
-                });
-    tweens["Close_Lever_Full"] = new TWEEN.Tween(mesh.rotation)
-                .to({y: DEG_TO_RAD * 0}, 2000)
-                .onComplete(function() {
-                    if (Math.abs(mesh.rotation.y)>=2*Math.PI) {
-                        mesh.rotation.y = mesh.rotation.y % (2*Math.PI);
-                    }
-                });
-    tweens["Pull_Lever_Hold"] = new TWEEN.Tween(mesh.rotation)
-                .to({y: DEG_TO_RAD * 30}, 2000)
-                .onComplete(function() {
-                    if (Math.abs(mesh.rotation.y)>=2*Math.PI) {
-                        mesh.rotation.y = mesh.rotation.y % (2*Math.PI);
-                    }
-                });
-    tweens["Film_Retriever_Open"] = new TWEEN.Tween(mesh.rotation)
-                .to({z: DEG_TO_RAD * 180}, 2000)
-                .onComplete(function() {
-                    if (Math.abs(mesh.rotation.z)>=2*Math.PI) {
-                        mesh.rotation.z = mesh.rotation.z % (2*Math.PI);
-                    }
-                });
-    tweens["Film_Retriever_Close"] = new TWEEN.Tween(mesh.rotation)
-                .to({z: DEG_TO_RAD * 0}, 2000)
-                .onComplete(function() {
-                    if (Math.abs(mesh.rotation.z)>=2*Math.PI) {
-                        mesh.rotation.z = mesh.rotation.z % (2*Math.PI);
-                    }
-                });
-    tweens["Film_Retriever_Rotate"] = new TWEEN.Tween(mesh.rotation)
-                .to({y: DEG_TO_RAD * 360}, 2000)
-                .onComplete(function() {
-                    if (Math.abs(mesh.rotation.y)>=2*Math.PI) {
-                        mesh.rotation.y = mesh.rotation.y % (2*Math.PI);
-                    }
-                });
-    tweens["On_Off_Arm"] = new TWEEN.Tween(mesh.rotation)
-                .to({y: DEG_TO_RAD * 0}, 2000)
-                .onComplete(function() {
-                    if (Math.abs(mesh.rotation.y)>=2*Math.PI) {
-                        mesh.rotation.y = mesh.rotation.y % (2*Math.PI);
-                    }
-                });
-    tweens["On_Off_Disarm"] = new TWEEN.Tween(mesh.rotation)
-                .to({y: DEG_TO_RAD * 30}, 2000)
-                .onComplete(function() {
-                    if (Math.abs(mesh.rotation.y)>=2*Math.PI) {
-                        mesh.rotation.y = mesh.rotation.y % (2*Math.PI);
-                    }
-                });
-    return tweens
-}
 
 function executeRaycast(event) {
 
@@ -87,7 +27,6 @@ function executeRaycast(event) {
         console.log(firstHit.name);
         var mesh = scene.getObjectByName(firstHit.name);
 
-        tween = fillTween();
         if ((firstHit.name === "Pull_Lever_Pivot") || (firstHit.name === "Pull_lever_Arm")){
             if (firstHit.name === "Pull_Lever_Arm"){
                 mesh = scene.getObjectByName("Pull_Lever_Pivot");

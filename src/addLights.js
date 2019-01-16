@@ -14,10 +14,10 @@ function addLights() {
     spotLight.shadow.mapSize.width = 2048 * mapScale;
     spotLight.shadow.mapSize.height = 2048 * mapScale;
     spotLight.target.position.set(-1, 0, 1 );
-    //scene.add(spotLight);
+    scene.add(spotLight);
 
     var helper = new THREE.CameraHelper( spotLight.shadow.camera );
-    //scene.add( helper );
+    scene.add( helper );
 
 
     var ambientLight = new THREE.AmbientLight(0xffffff);
